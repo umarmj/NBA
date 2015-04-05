@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context>
+
+    <!-- Default set of monitored resources. If one of these changes, the    -->
+    
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+       
+    <Resource
+			 name="jdbc/confluence"
+			 auth="Container"
+			 type="javax.sql.DataSource"
+			 driverClassName="oracle.jdbc.OracleDriver"
+			 url="jdbc:oracle:thin:@oracle.cise.ufl.edu:1521:orcl"
+			 username="rl0"
+			 password="lr881206"
+			 connectionProperties="SetBigStringTryClob=true"
+			 maxActive="25"
+			 maxIdle="5"
+			 maxWait="10000"
+			 />
+
+</Context>
