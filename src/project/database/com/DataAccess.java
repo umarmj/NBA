@@ -176,4 +176,47 @@ public class DataAccess {
 		return returnString;
 	
 	}
+	
+	//team roasters
+	@Path("/teamroster")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public String ReturnTeamRoster(@QueryParam("team") String team,@QueryParam("season") String season) throws Exception {
+		String returnString = null;
+		Connection conn = null;
+		
+		System.out.println("team:" + team);
+		
+		try{
+			conn = OracleConnection.OracleConnectionConn().getConnection();
+			
+			System.out.println("team: "+team);
+			System.out.println("season: "+season);
+			String getteams = "{call PKG_TEAMDATA.Get_Team_Roster(?,?,?)}";
+			CallableStatement callableStatement = conn.prepareCall(getteams);
+			callableStatement.setString(1, team);
+			callableStatement.setString(2, season);
+			callableStatement.registerOutParameter(3, OracleTypes.CURSOR);
+			
+			callableStatement.executeUpdate();
+			
+			ResultSet rs = (ResultSet)callableStatement.getObject(3);
+			
+			ToJSON converter = new ToJSON();
+			JSONArray json = new JSONArray();
+			
+			json = converter.toJSONArray(rs);
+			
+			returnString = json.toString();
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
+		finally{
+			if (conn != null) conn.close();
+			
+		}
+		return returnString;
+	
+	}
 }
