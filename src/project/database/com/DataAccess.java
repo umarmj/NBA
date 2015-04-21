@@ -426,4 +426,42 @@ public class DataAccess {
 		return returnString;
 	
 	}
+	
+	@Path("/count")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public String Count() throws Exception {
+		String returnString = null;
+		Connection conn = null;
+		
+		//System.out.println("team:" + team);
+		
+		try{
+			conn = OracleConnection.OracleConnectionConn().getConnection();
+			
+			String comparePlayers = "{call PKG_GAME.Get_Count(?)}";
+			CallableStatement callableStatement = conn.prepareCall(comparePlayers);
+			callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
+			
+			callableStatement.executeUpdate();
+			
+			ResultSet rs = (ResultSet)callableStatement.getObject(1);
+			
+			ToJSON converter = new ToJSON();
+			JSONArray json = new JSONArray();
+			
+			json = converter.toJSONArray(rs);
+			
+			returnString = json.toString();
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
+		finally{
+			if (conn != null) conn.close();
+			
+		}
+		return returnString;
+	
+	}
 }
