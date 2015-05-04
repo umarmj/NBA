@@ -1,0 +1,462 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+<link href="styles/main.css" rel="stylesheet" type="text/css">
+<style>
+table, td {
+    border: 1px solid black;
+}
+
+
+
+</style>
+<script>
+var xmlhttp = new XMLHttpRequest();
+var xmlhttp2= new XMLHttpRequest();
+var xmlhttp3= new XMLHttpRequest();
+var xmlhttp4= new XMLHttpRequest();
+var xmlhttp5= new XMLHttpRequest();
+var thedate="";
+var gameid="";
+function showgame(str){
+	
+	thedate=str;
+	
+	xmlhttp.onreadystatechange=function()
+ 	 {
+  		if (xmlhttp.readyState==4 && xmlhttp.status==200){
+		
+		var outputlist = "";
+		var text = '{"Games":'+xmlhttp.responseText+'}';
+		obj= JSON.parse(text);
+		var i;
+    	for(i = 0; i < obj.Games.length; i++) 
+		{
+			//var x = "";
+			//var x = ''+ i+ '';
+			//document.getElementById("selectedplayer").innerHTML=x;
+			outputlist += '<button type ="button" style="border: none; background-color: #FFFFFF;" onclick="showteamstats(obj.Games['+i+'].GAMEID, obj.Games['+i+'].TEAMWIN, obj.Games['+i+'].TEAMLOSE)" >'+obj.Games[i].TEAMWIN+" "+obj.Games[i].TEAMWINSCORE+": "+obj.Games[i].TEAMLOSESCORE+" "+obj.Games[i].TEAMLOSE+'</button><br>'; 
+		}//to list each games in a single line with href.
+    	
+		document.getElementById("gamelist").innerHTML=outputlist;
+		//'<button type ="button" style="border: none; background-color: #FFFFFF;" onclick="showteamstats(obj.Games['+i+'].GAMEID, obj.Games['+i+'].TEAMWIN), obj.Games['+i+'].TEAMLOSE" >'
+			 //+obj.Games['+i+'].TEAMWIN+'</button><br>';
+		
+		//document.getElementById("gamelist").innerHTML =xmlhttp.responseText;
+    	}
+  	}
+	
+	
+xmlhttp.open("GET","http://localhost:8080/project.database/api/DataAccess/game?date="+thedate,true);
+xmlhttp.send();
+}
+
+function showteamstats(id, team1, team2){
+	var gameId;
+	var teamwin;
+	var teamlose;
+	gameId=id;
+	teamwin=team1;
+	teamlose=team2;
+	showteamwinteamstats(gameId, teamwin);
+	showteamloseteamstats(gameId, teamlose);
+	showteamwinplayerstats(gameId, teamwin);
+	showteamloseplayerstats(gameId, teamlose);
+	
+}
+
+function showteamwinteamstats(m, n){
+	var id="";
+	var teamname="";
+	id=m;
+	teamname=n;
+	var table=document.getElementById("Table1");
+	while(table.hasChildNodes()){
+		table.removeChild(table.firstChild);	
+	}
+	var row;
+	var cell1;
+	var cell2;
+	var cell3;
+	var cell4;
+	var cell5;
+	var cell6;
+	var cell7;
+	var cell8;
+	xmlhttp2.onreadystatechange=function()
+ 	 {
+ 		 if (xmlhttp2.readyState==4 && xmlhttp2.status==200){
+			 var outputplayerstat="";
+			var playerstat= '{"playerstat":'+xmlhttp2.responseText+'}';
+			
+			obj2= JSON.parse(playerstat);
+			row = table.insertRow(0);
+			cell1 = row.insertCell(0);
+			cell2 = row.insertCell(1);
+			cell3 = row.insertCell(2);
+			cell4 = row.insertCell(3);
+			cell5 = row.insertCell(4);
+			cell6 = row.insertCell(5);
+			cell7 = row.insertCell(6);
+			cell8 = row.insertCell(7);
+			cell1.innerHTML= "TEAM WIN";
+			cell2.innerHTML= "PTS";
+			cell3.innerHTML= "FG_PCT";
+			cell4.innerHTML= "TRB";
+			cell5.innerHTML= "AST";
+			cell6.innerHTML= "STL";
+			cell7.innerHTML= "BLK";
+			cell8.innerHTML= "TOV";
+			for(i=0; i<obj2.playerstat.length; i++){
+				
+				row = table.insertRow(i+1);
+				cell1 = row.insertCell(0);
+				cell2 = row.insertCell(1);
+				cell3 = row.insertCell(2);
+				cell4 = row.insertCell(3);
+				cell5 = row.insertCell(4);
+				cell6 = row.insertCell(5);
+				cell7 = row.insertCell(6);
+				cell8 = row.insertCell(7);
+				
+				cell1.innerHTML= obj2.playerstat[i].TEAMNAME;
+				cell2.innerHTML= obj2.playerstat[i].PTS;
+				cell3.innerHTML= obj2.playerstat[i].FG_PCT;
+				cell4.innerHTML= obj2.playerstat[i].TRB;
+				cell5.innerHTML= obj2.playerstat[i].AST;
+				cell6.innerHTML= obj2.playerstat[i].STL;
+				cell7.innerHTML= obj2.playerstat[i].BLK;
+				cell8.innerHTML= obj2.playerstat[i].TOV;
+				
+			}
+			
+  		}
+  	}
+xmlhttp2.open("GET","http://localhost:8080/project.database/api/DataAccess/gameTeamStats?gameId="+id+"&team="+teamname,true);
+xmlhttp2.send();
+	
+}
+
+
+function showteamloseteamstats(m, n){
+	var id="";
+	var teamname="";
+	id=m;
+	teamname=n;
+	var table=document.getElementById("Table2");
+	while(table.hasChildNodes()){
+		table.removeChild(table.firstChild);	
+	}
+	var row;
+	var cell1;
+	var cell2;
+	var cell3;
+	var cell4;
+	var cell5;
+	var cell6;
+	var cell7;
+	var cell8;
+	xmlhttp3.onreadystatechange=function()
+  	{
+  		if (xmlhttp3.readyState==4 && xmlhttp3.status==200)
+    	{
+		
+    	
+		var outputplayerstat="";
+			var playerstat= '{"playerstat":'+xmlhttp3.responseText+'}';
+			
+			obj2= JSON.parse(playerstat);
+			row = table.insertRow(0);
+			cell1 = row.insertCell(0);
+			cell2 = row.insertCell(1);
+			cell3 = row.insertCell(2);
+			cell4 = row.insertCell(3);
+			cell5 = row.insertCell(4);
+			cell6 = row.insertCell(5);
+			cell7 = row.insertCell(6);
+			cell8 = row.insertCell(7);
+			cell1.innerHTML= "TEAM LOSE";
+			cell2.innerHTML= "PTS";
+			cell3.innerHTML= "FG_PCT";
+			cell4.innerHTML= "TRB";
+			cell5.innerHTML= "AST";
+			cell6.innerHTML= "STL";
+			cell7.innerHTML= "BLK";
+			cell8.innerHTML= "TOV";
+			for(i=0; i<obj2.playerstat.length; i++){
+				
+				row = table.insertRow(i+1);
+				cell1 = row.insertCell(0);
+				cell2 = row.insertCell(1);
+				cell3 = row.insertCell(2);
+				cell4 = row.insertCell(3);
+				cell5 = row.insertCell(4);
+				cell6 = row.insertCell(5);
+				cell7 = row.insertCell(6);
+				cell8 = row.insertCell(7);
+				
+				cell1.innerHTML= obj2.playerstat[i].TEAMNAME;
+				cell2.innerHTML= obj2.playerstat[i].PTS;
+				cell3.innerHTML= obj2.playerstat[i].FG_PCT;
+				cell4.innerHTML= obj2.playerstat[i].TRB;
+				cell5.innerHTML= obj2.playerstat[i].AST;
+				cell6.innerHTML= obj2.playerstat[i].STL;
+				cell7.innerHTML= obj2.playerstat[i].BLK;
+				cell8.innerHTML= obj2.playerstat[i].TOV;
+				
+			}
+    	}
+ 	 }
+xmlhttp3.open("GET","http://localhost:8080/project.database/api/DataAccess/gameTeamStats?gameId="+id+"&team="+teamname,true);
+xmlhttp3.send();
+	
+}
+
+
+function showteamwinplayerstats(m, n){
+	var id="";
+	var teamname="";
+	id=m;
+	teamname=n;
+	var table=document.getElementById("Table3");
+	while(table.hasChildNodes()){
+		table.removeChild(table.firstChild);	
+	}
+	var row;
+	var cell1;
+	var cell2;
+	var cell3;
+	var cell4;
+	var cell5;
+	var cell6;
+	var cell7;
+	var cell8;
+	var cell9;
+	var cell10;
+	var cell11;
+	
+	
+xmlhttp4.onreadystatechange=function()
+  {
+  if (xmlhttp4.readyState==4 && xmlhttp4.status==200)
+    {
+		
+    	
+	 	
+		var outputplayerstat="";
+			var playerstat= '{"playerstat":'+xmlhttp4.responseText+'}';
+			
+			obj2= JSON.parse(playerstat);
+			row = table.insertRow(0);
+			cell1 = row.insertCell(0);
+			cell2 = row.insertCell(1);
+			cell3 = row.insertCell(2);
+			cell4 = row.insertCell(3);
+			cell5 = row.insertCell(4);
+			cell6 = row.insertCell(5);
+			cell7 = row.insertCell(6);
+			cell8 = row.insertCell(7);
+			cell9 = row.insertCell(8);
+			cell10 = row.insertCell(9);
+			cell11 = row.insertCell(10);
+			cell1.innerHTML= "TEAMNAME";
+			cell2.innerHTML= "PLAYERNAME";
+			cell3.innerHTML= "MP";
+			cell4.innerHTML= "PTS";
+			cell5.innerHTML= "PG_PCT";
+			cell6.innerHTML= "TRB";
+			cell7.innerHTML= "AST";
+			cell8.innerHTML= "STL";
+			cell9.innerHTML= "BLK";
+			cell10.innerHTML= "PF";
+			cell11.innerHTML= "TOV";
+			for(i=0; i<obj2.playerstat.length; i++){
+				
+				row = table.insertRow(i+1);
+				cell1 = row.insertCell(0);
+				cell2 = row.insertCell(1);
+				cell3 = row.insertCell(2);
+				cell4 = row.insertCell(3);
+				cell5 = row.insertCell(4);
+				cell6 = row.insertCell(5);
+				cell7 = row.insertCell(6);
+				cell8 = row.insertCell(7);
+				cell9 = row.insertCell(8);
+				cell10 = row.insertCell(9);
+				cell11 = row.insertCell(10);
+				
+				
+				cell1.innerHTML= obj2.playerstat[i].TEAMNAME;
+				cell2.innerHTML= obj2.playerstat[i].PLAYERNAME;
+				cell3.innerHTML= obj2.playerstat[i].MP;
+				cell4.innerHTML= obj2.playerstat[i].PTS;
+				cell5.innerHTML= obj2.playerstat[i].FG_PCT;
+				cell6.innerHTML= obj2.playerstat[i].TRB;
+				cell7.innerHTML= obj2.playerstat[i].AST;
+				cell8.innerHTML= obj2.playerstat[i].STL;
+				cell9.innerHTML= obj2.playerstat[i].BLK;
+				cell10.innerHTML= obj2.playerstat[i].PF;
+				cell11.innerHTML= obj2.playerstat[i].TOV;
+			}
+	
+    }
+  }
+xmlhttp4.open("GET","http://localhost:8080/project.database/api/DataAccess/gamePlayerStats?gameId="+id+"&team="+teamname,true);
+xmlhttp4.send();
+	
+}
+
+
+function showteamloseplayerstats(m, n){
+	var id="";
+	var teamname="";
+	id=m;
+	teamname=n;
+	var table=document.getElementById("Table4");
+	while(table.hasChildNodes()){
+		table.removeChild(table.firstChild);	
+	}
+	var row;
+	var cell1;
+	var cell2;
+	var cell3;
+	var cell4;
+	var cell5;
+	var cell6;
+	var cell7;
+	var cell8;
+	var cell9;
+	var cell10;
+	var cell11;
+xmlhttp5.onreadystatechange=function()
+  {
+  if (xmlhttp5.readyState==4 && xmlhttp5.status==200)
+    {
+    	
+		var outputplayerstat="";
+			var playerstat= '{"playerstat":'+xmlhttp5.responseText+'}';
+			
+			obj2= JSON.parse(playerstat);
+			row = table.insertRow(0);
+			cell1 = row.insertCell(0);
+			cell2 = row.insertCell(1);
+			cell3 = row.insertCell(2);
+			cell4 = row.insertCell(3);
+			cell5 = row.insertCell(4);
+			cell6 = row.insertCell(5);
+			cell7 = row.insertCell(6);
+			cell8 = row.insertCell(7);
+			cell9 = row.insertCell(8);
+			cell10 = row.insertCell(9);
+			cell11 = row.insertCell(10);
+			cell1.innerHTML= "TEAMNAME";
+			cell2.innerHTML= "PLAYERNAME";
+			cell3.innerHTML= "MP";
+			cell4.innerHTML= "PTS";
+			cell5.innerHTML= "PG_PCT";
+			cell6.innerHTML= "TRB";
+			cell7.innerHTML= "AST";
+			cell8.innerHTML= "STL";
+			cell9.innerHTML= "BLK";
+			cell10.innerHTML= "PF";
+			cell11.innerHTML= "TOV";
+			for(i=0; i<obj2.playerstat.length; i++){
+				
+				row = table.insertRow(i+1);
+				cell1 = row.insertCell(0);
+				cell2 = row.insertCell(1);
+				cell3 = row.insertCell(2);
+				cell4 = row.insertCell(3);
+				cell5 = row.insertCell(4);
+				cell6 = row.insertCell(5);
+				cell7 = row.insertCell(6);
+				cell8 = row.insertCell(7);
+				cell9 = row.insertCell(8);
+				cell10 = row.insertCell(9);
+				cell11 = row.insertCell(10);
+				
+				
+				cell1.innerHTML= obj2.playerstat[i].TEAMNAME;
+				cell2.innerHTML= obj2.playerstat[i].PLAYERNAME;
+				cell3.innerHTML= obj2.playerstat[i].MP;
+				cell4.innerHTML= obj2.playerstat[i].PTS;
+				cell5.innerHTML= obj2.playerstat[i].FG_PCT;
+				cell6.innerHTML= obj2.playerstat[i].TRB;
+				cell7.innerHTML= obj2.playerstat[i].AST;
+				cell8.innerHTML= obj2.playerstat[i].STL;
+				cell9.innerHTML= obj2.playerstat[i].BLK;
+				cell10.innerHTML= obj2.playerstat[i].PF;
+				cell11.innerHTML= obj2.playerstat[i].TOV;
+			}
+    }
+  }
+xmlhttp5.open("GET","http://localhost:8080/project.database/api/DataAccess/gamePlayerStats?gameId="+id+"&team="+teamname,true);
+xmlhttp5.send();
+	
+	
+
+
+}
+</script>
+</head>
+
+
+
+
+
+
+
+<body>
+<div id="wrapper">
+  
+  <header id="top">
+    <h1>NBA 2003-2013 database</h1>
+    <nav id="mainnav">
+      <ul>
+        <li><a href="index2.html">Home</a></li>
+        <li><a href = "teams3.html">Team</a></li>
+        <li><a href="playerlist2.html">Player</a></li>
+        <li><a href="game.html" class="thispage">Game</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+
+<div id="search"><input name="team" type="search" id="gamesearch">
+
+<button type ="button" id="button" onclick="showgame(document.getElementById('gamesearch').value)" >
+			 search game</button>
+</div>
+
+<div id="dateselected">
+</div>
+<div id="teamwinteamstats"></div>
+<br>
+<table id="Table1">
+</table>
+<br>
+<table id="Table2">
+</table>
+<br>
+<table id="Table3">
+</table>
+<br>
+<table id="Table4">
+</table>
+<br>
+
+<div id="teamloseteamstats"></div>
+<div id="teamwinplayerstats"></div>
+<div id="teamloseplayerstats"></div>
+<p>Games Played</p>
+<div id="gamelist">
+
+</div>
+
+
+
+
+</body>
+</html>

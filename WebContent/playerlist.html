@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+
+</head>
+
+<body>
+<div id="wrapper">
+  <header id="top">
+    <h1>NBA 2003-2014 database</h1>
+    <nav id="mainnav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href = "team.html">Team</a></li>
+        <li><a href="playerlist.html" class="thispage">Playerlist</a></li>
+        <li><a href="game.html">Game</a></li>
+      </ul>
+    </nav>
+  </header>
+
+</div>
+<div id = "selectedplayer"></div>
+<div id ="playerlist"></div>
+<script>
+var xmlhttp = new XMLHttpRequest();
+
+
+//function showMountains(str)
+//{
+//var xmlhttp = new XMLHttpRequest();
+//var xmlhttp;    
+/*if (str=="")
+  {
+  document.getElementById("callMountainsName").innerHTML="";
+  return;
+  }
+  */
+/*if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+ */
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+		var outputlist = "";
+		var text = '{"MountainsNames":'+xmlhttp.responseText+'}';
+		obj= JSON.parse(text);
+		var i;
+    	for(i = 0; i < obj.MountainsNames.length; i++) 
+		{
+			outputlist += '<a href="player.html">' + 
+			obj.MountainsNames[i].NAME + '</a><br>';
+		}//to list each MountainsNames in a single line with href.
+    	//document.getElementById("callMountainsName").innerHTML=obj.MountainsNames[1].NAME;
+		document.getElementById("playerlist").innerHTML=outputlist;
+	//document.getElementById("callMountainsName").innerHTML = xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","http://localhost:8080/com.youtube.rest/api/V1/status/database",true);
+xmlhttp.send();
+//}
+</script> 
+
+
+</body>
+</html>

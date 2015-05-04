@@ -1,0 +1,220 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+
+
+<link href="styles/main.css" rel="stylesheet" type="text/css">
+
+
+<style>
+table, td {
+    border: 1px solid black;
+}
+</style>
+</head>
+
+<body style="">
+<div id="wrapper">
+  <header id="top">
+    <h1>NBA 2003-2013 database</h1>
+    <nav id="mainnav">
+      <ul>
+        <li><a href="index2.html">Home</a></li>
+        <li><a href = "teams2.html" class="thispage">Team</a></li>
+        <li><a href="playerlist2.html">Playerlist2</a></li>
+        <li><a href="game.html">Game</a></li>
+      </ul>
+    </nav>
+  </header>
+
+<img id="playerPic">
+<img id="teamPic">
+</div>
+<div id = "selectedteam"></div>
+
+<div id ="teamlist"></div>
+<table id="myTable">
+		</table>
+
+
+<div id ="teamstat"></div>
+
+
+
+
+
+
+
+<script>
+//teamPicture
+
+
+
+
+
+function printTeamPic(str){
+	var teamname1="";
+	teamname1= str;
+	document.getElementById("teamPic").src="images/"+teamname1+".png";
+}
+
+
+function showteam(str)
+{
+	printTeamPic(str);
+	var teamname="";
+	teamname= str;
+	var table=document.getElementById("myTable");
+	var row;
+	var cell1;
+	var cell2;
+	var cell3;
+	var cell4;
+	var cell5;
+	var cell6;
+	var cell7;
+	var cell8;
+	var cell9;
+	/*var text = aaa;
+	var playername=JSON.parse(text);*/
+//var xmlhttp2 = new XMLHttpRequest();
+	xmlhttp2.onreadystatechange=function(){
+		
+		if(xmlhttp2.readyState==4 && xmlhttp2.status==200){
+			var outputteam="";
+			var teaminfo= '{"theteam":'+xmlhttp2.responseText+'}';
+			
+			//var outputlist = "";
+			//var text = '{"Players":'+xmlhttp.responseText+'}';
+			obj= JSON.parse(teaminfo);
+			outputteam='TEAMNAME: '+obj.theteam[0].TEAMNAME+'<br>'+'ABBR: '+obj.theteam[0].ABBR+'<br>'+'LOCATION: '+obj.theteam[0].LOCATION+'<br>'+'STADIUM: '+obj.theteam[0].STADIUM+'<br>';
+			document.getElementById("teamlist").innerHTML= outputteam;
+			
+			
+			//document.getElementById("teamlist").innerHTML= xmlhttp2.responseText;
+			}
+	}
+xmlhttp2.open("GET","http://localhost:8080/project.database/api/DataAccess/teaminformation?team="+teamname,true);
+xmlhttp2.send();
+
+xmlhttp3.onreadystatechange=function(){
+		
+		if(xmlhttp3.readyState==4 && xmlhttp3.status==200){
+			//document.getElementById("teamstat").innerHTML= xmlhttp3.responseText;
+			
+			var outputteamstat="";
+			var teamstat= '{"teamstat":'+xmlhttp3.responseText+'}';
+			
+			obj2= JSON.parse(teamstat);
+			row = table.insertRow(0);
+			cell1 = row.insertCell(0);
+			cell2 = row.insertCell(1);
+			cell3 = row.insertCell(2);
+			cell4 = row.insertCell(3);
+			cell5 = row.insertCell(4);
+			cell6 = row.insertCell(5);
+			cell7 = row.insertCell(6);
+			cell8 = row.insertCell(7);
+			cell9 = row.insertCell(8);
+			cell1.innerHTML= "SEASON";
+			cell2.innerHTML= "GAME PLAYED";
+			cell3.innerHTML= "WIN";
+			cell4.innerHTML= "PTS";
+			cell5.innerHTML= "REB";
+			cell6.innerHTML= "AST";
+			cell7.innerHTML= "STL";
+			cell8.innerHTML= "BLK";
+			cell9.innerHTML= "TOV";
+			for(i=0; i<obj2.teamstat.length; i++){
+				
+				row = table.insertRow(i+1);
+				cell1 = row.insertCell(0);
+				cell2 = row.insertCell(1);
+				cell3 = row.insertCell(2);
+				cell4 = row.insertCell(3);
+				cell5 = row.insertCell(4);
+				cell6 = row.insertCell(5);
+				cell7 = row.insertCell(6);
+				cell8 = row.insertCell(7);
+				cell9 = row.insertCell(8);
+			
+				cell1.innerHTML= obj2.teamstat[i].SEASON;
+				cell2.innerHTML= obj2.teamstat[i].GP;
+				cell3.innerHTML= obj2.teamstat[i].WIN;
+				cell4.innerHTML= (obj2.teamstat[i].PTS/obj2.teamstat[i].GP).toFixed(2);
+				cell5.innerHTML= (obj2.teamstat[i].REB/obj2.teamstat[i].GP).toFixed(2);
+				cell6.innerHTML= (obj2.teamstat[i].AST/obj2.teamstat[i].GP).toFixed(2);
+				cell7.innerHTML= (obj2.teamstat[i].STL/obj2.teamstat[i].GP).toFixed(2);
+				cell8.innerHTML= (obj2.teamstat[i].BLK/obj2.teamstat[i].GP).toFixed(2);
+				cell9.innerHTML= (obj2.teamstat[i].TOV/obj2.teamstat[i].GP).toFixed(2);
+				
+			}
+				
+				
+				
+			
+			
+		}
+	}
+xmlhttp3.open("GET","http://localhost:8080/project.database/api/DataAccess/teamstatistics?team="+teamname,true);
+xmlhttp3.send();
+
+}
+
+	
+var xmlhttp = new XMLHttpRequest();
+var xmlhttp2= new XMLHttpRequest();
+var xmlhttp3= new XMLHttpRequest();
+
+
+//function showMountains(str)
+//{
+//var xmlhttp = new XMLHttpRequest();
+//var xmlhttp;    
+/*if (str=="")
+  {
+  document.getElementById("callMountainsName").innerHTML="";
+  return;
+  }
+  */
+/*if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+ */
+
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+		var outputlist = "";
+		var text = '{"Teams":'+xmlhttp.responseText+'}';
+		obj= JSON.parse(text);
+		var i;
+    	for(i = 0; i < obj.Teams.length; i++) 
+		{
+			//var x = "";
+			//var x = ''+ i+ '';
+			//document.getElementById("selectedplayer").innerHTML=x;
+			outputlist +=  '<button type ="button" style="border: none; background-color: #FFFFFF;" onclick="showteam(obj.Teams['+i+'].TEAMNAME)" >'
+			 +obj.Teams[i].TEAMNAME+ '</button><br>';
+		}//to list each MountainsNames in a single line with href.
+    	//document.getElementById("callMountainsName").innerHTML=obj.MountainsNames[1].NAME;
+		document.getElementById("teamlist").innerHTML=outputlist;
+	//document.getElementById("callMountainsName").innerHTML = xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","http://localhost:8080/project.database/api/DataAccess/teaminformation",true);
+xmlhttp.send();
+//}
+</script> 
+
+
+</body>
+</html>

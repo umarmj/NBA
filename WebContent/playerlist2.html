@@ -1,0 +1,661 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+
+<link href="styles/main.css" rel="stylesheet" type="text/css">
+<style>
+table, td {
+    border: 1px solid black;
+}
+
+
+
+</style>
+<style>
+div.playerlist {
+    width: 100px;
+    height: 300px;
+    overflow: scroll;
+}
+</style>
+<link href="jQueryAssets/jquery.ui.core.min.css" rel="stylesheet" type="text/css">
+<link href="jQueryAssets/jquery.ui.theme.min.css" rel="stylesheet" type="text/css">
+<link href="jQueryAssets/jquery.ui.tabs.min.css" rel="stylesheet" type="text/css">
+<script src="jQueryAssets/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="jQueryAssets/jquery.ui-1.10.4.tabs.min.js" type="text/javascript"></script>
+</head>
+
+<body style="">
+<div id="wrapper">
+  <header id="top">
+    <h1>NBA 2003-2013 database</h1>
+    <nav id="mainnav">
+      <ul>
+        <li><a href="index2.html">Home</a></li>
+        <li><a href = "teams3.html">Team</a></li>
+        <li><a href="playerlist2.html" class="thispage">Player</a></li>
+        <li><a href="game.html">Game</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>  
+
+
+<div id="topplayer">
+<p>Let's see who are the superstars!</p>
+
+<div id="Tabs1">
+    <ul>
+      <li><a href="#tabs-1">PTS</a></li>
+      <li><a href="#tabs-2">REB</a></li>
+      <li><a href="#tabs-3">AST</a></li>
+      <li><a href="#tabs-4">BLK</a></li>
+      <li><a href="#tabs-5">STL</a></li>
+
+      
+    </ul>
+    <div id="tabs-1">
+        <p>
+    <select id="season1" onchange="showPPG().value">
+  	<option value="2012-2013">2012-2013
+  	<option value="2011-2012">2011-2012
+  	<option value="2010-2011">2010-2011
+  	<option value="2009-2010">2009-2010
+    <option value="2008-2009">2008-2009
+    <option value="2007-2008">2007-2008
+    <option value="2006-2007">2006-2007
+    <option value="2005-2006">2005-2006
+    <option value="2004-2005">2004-2005
+    <option value="2003-2004">2003-2004
+    
+    
+	</select>
+    <br>
+      <p><table id="TablePPG">
+		</table></p>
+    </div>
+  <div id="tabs-2">
+    <p>
+    <select id="season2" onchange="showRPG().value">
+  	<option value="2012-2013">2012-2013
+  	<option value="2011-2012">2011-2012
+  	<option value="2010-2011">2010-2011
+  	<option value="2009-2010">2009-2010
+    <option value="2008-2009">2008-2009
+    <option value="2007-2008">2007-2008
+    <option value="2006-2007">2006-2007
+    <option value="2005-2006">2005-2006
+    <option value="2004-2005">2004-2005
+    <option value="2003-2004">2003-2004
+    
+    
+	</select>
+    <br>
+    
+    <p><table id="TableRPG">
+		</table></p>
+    
+    </div>
+    
+    <div id="tabs-3">
+        <p>
+    <select id="season3" onchange="showAPG().value">
+  	<option value="2012-2013">2012-2013
+  	<option value="2011-2012">2011-2012
+  	<option value="2010-2011">2010-2011
+  	<option value="2009-2010">2009-2010
+    <option value="2008-2009">2008-2009
+    <option value="2007-2008">2007-2008
+    <option value="2006-2007">2006-2007
+    <option value="2005-2006">2005-2006
+    <option value="2004-2005">2004-2005
+    <option value="2003-2004">2003-2004
+    
+    
+	</select>
+    <br>
+      <p><table id="TableAPG">
+		</table></p>
+    </div>
+    
+    
+     <div id="tabs-4">
+        <p>
+    <select id="season4" onchange="showBPG().value">
+  	<option value="2012-2013">2012-2013
+  	<option value="2011-2012">2011-2012
+  	<option value="2010-2011">2010-2011
+  	<option value="2009-2010">2009-2010
+    <option value="2008-2009">2008-2009
+    <option value="2007-2008">2007-2008
+    <option value="2006-2007">2006-2007
+    <option value="2005-2006">2005-2006
+    <option value="2004-2005">2004-2005
+    <option value="2003-2004">2003-2004
+    
+    
+	</select>
+    <br>
+      <p><table id="TableBPG">
+		</table></p>
+    </div>
+    
+    <div id="tabs-5">
+        <p>
+    <select id="season5" onchange="showSPG().value">
+  	<option value="2012-2013">2012-2013
+  	<option value="2011-2012">2011-2012
+  	<option value="2010-2011">2010-2011
+  	<option value="2009-2010">2009-2010
+    <option value="2008-2009">2008-2009
+    <option value="2007-2008">2007-2008
+    <option value="2006-2007">2006-2007
+    <option value="2005-2006">2005-2006
+    <option value="2004-2005">2004-2005
+    <option value="2003-2004">2003-2004
+    
+    
+	</select>
+    <br>
+      <p><table id="TableSPG">
+		</table></p>
+    </div>
+    
+    
+   </div>
+   
+</div>
+
+
+
+<div id="search"><input name="player" type="search" id="playersearch"><button type ="button" id="button" onclick="showplayer(document.getElementById('playersearch').value)" >
+			 search player</button></div>
+
+<div><img id="playerPic"></div>
+
+<div id = "selectedplayer"></div>
+
+
+
+<div id ="playerlist"></div>
+
+<br>
+<div id="myTableDiv">
+<p>
+<table id="myTable">
+</table>
+</p></div>
+
+<br>
+
+<div id ="stat"></div>
+
+
+
+
+
+
+<script>
+function printPic(str){
+	var playername1="";
+	playername1= str;
+	document.getElementById("playerPic").src="images/"+playername1+".png";
+}
+
+function showPPG(){
+	var season;
+	document.getElementById("playerPic").style.display='none';
+	
+	var playertable=document.getElementById("myTable");
+	while(playertable.hasChildNodes()){
+		playertable.removeChild(playertable.firstChild);
+		}
+	document.getElementById("playerlist").innerHTML="";
+	season=document.getElementById("season1").value;
+	var table=document.getElementById("TablePPG");
+	while(table.hasChildNodes()){
+		table.removeChild(table.firstChild);	
+	}
+	var row;
+	var cell1;
+	var cell2;
+	
+	
+	//playername is invalid, then print out nothing
+	/*if(playername==""){
+	
+	printDiv("errorsearch");
+	}
+	*/
+	xmlhttp6.onreadystatechange=function(){
+		
+		if(xmlhttp6.readyState==4 && xmlhttp6.status==200){
+			
+		var outputplayerstat="";
+			var playerstat= '{"playerstat":'+xmlhttp6.responseText+'}';
+			
+			obj2= JSON.parse(playerstat);
+			row = table.insertRow(0);
+			cell1 = row.insertCell(0);
+			cell2 = row.insertCell(1);
+			
+			cell1.innerHTML= "PLAYERNAME";
+			cell2.innerHTML= "PPG";
+		
+			for(i=0; i<obj2.playerstat.length; i++){
+				
+				row = table.insertRow(i+1);
+				cell1 = row.insertCell(0);
+				cell2 = row.insertCell(1);
+				
+			
+				cell1.innerHTML= '<button type ="button" style="border: none; background-color: #FFFFFF;" onclick="showplayer(obj2.playerstat['+i+'].PLAYERNAME)" >'+obj2.playerstat[i].PLAYERNAME+ '</button>';
+				cell2.innerHTML= (obj2.playerstat[i].PPG).toFixed(2);
+				
+			}
+				
+	
+		}
+	}
+xmlhttp6.open("GET","http://localhost:8080/project.database/api/DataAccess/topten?season="+season+"&section=PTS",true);
+xmlhttp6.send();
+	
+	
+}
+
+function showRPG(){
+	var season;
+	document.getElementById("playerPic").style.display='none';
+	var playertable=document.getElementById("myTable");
+	while(playertable.hasChildNodes()){
+		playertable.removeChild(playertable.firstChild);
+		}
+	document.getElementById("playerlist").innerHTML="";
+	season=document.getElementById("season2").value;
+	var table=document.getElementById("TableRPG");
+	while(table.hasChildNodes()){
+		table.removeChild(table.firstChild);	
+	}
+	var row;
+	var cell1;
+	var cell2;
+	
+	
+	//playername is invalid, then print out nothing
+	/*if(playername==""){
+	
+	printDiv("errorsearch");
+	}
+	*/
+	xmlhttp7.onreadystatechange=function(){
+		
+		if(xmlhttp7.readyState==4 && xmlhttp7.status==200){
+			
+		var outputplayerstat="";
+			var playerstat= '{"playerstat":'+xmlhttp7.responseText+'}';
+			
+			obj2= JSON.parse(playerstat);
+			row = table.insertRow(0);
+			cell1 = row.insertCell(0);
+			cell2 = row.insertCell(1);
+			
+			cell1.innerHTML= "PLAYERNAME";
+			cell2.innerHTML= "RPG";
+		
+			for(i=0; i<obj2.playerstat.length; i++){
+				
+				row = table.insertRow(i+1);
+				cell1 = row.insertCell(0);
+				cell2 = row.insertCell(1);
+				
+			
+				cell1.innerHTML= '<button type ="button" style="border: none; background-color: #FFFFFF;" onclick="showplayer(obj2.playerstat['+i+'].PLAYERNAME)" >'+obj2.playerstat[i].PLAYERNAME+ '</button>';
+				cell2.innerHTML= (obj2.playerstat[i].RPG).toFixed(2);
+				
+			}
+				
+	
+		}
+	}
+xmlhttp7.open("GET","http://localhost:8080/project.database/api/DataAccess/topten?season="+season+"&section=REB",true);
+xmlhttp7.send();
+	
+	
+}
+
+function showAPG(){
+	var season;
+	season=document.getElementById("season3").value;
+	document.getElementById("playerPic").style.display='none';
+	var playertable=document.getElementById("myTable");
+	while(playertable.hasChildNodes()){
+		playertable.removeChild(playertable.firstChild);
+		}
+	document.getElementById("playerlist").innerHTML="";
+	var table=document.getElementById("TableAPG");
+	while(table.hasChildNodes()){
+		table.removeChild(table.firstChild);	
+	}
+	var row;
+	var cell1;
+	var cell2;
+	
+	
+	//playername is invalid, then print out nothing
+	/*if(playername==""){
+	
+	printDiv("errorsearch");
+	}
+	*/
+	xmlhttp8.onreadystatechange=function(){
+		
+		if(xmlhttp8.readyState==4 && xmlhttp8.status==200){
+			
+			var outputplayerstat="";
+			var playerstat= '{"playerstat":'+xmlhttp8.responseText+'}';
+			
+			obj2= JSON.parse(playerstat);
+			row = table.insertRow(0);
+			cell1 = row.insertCell(0);
+			cell2 = row.insertCell(1);
+			
+			cell1.innerHTML= "PLAYERNAME";
+			cell2.innerHTML= "APG";
+		
+			for(i=0; i<obj2.playerstat.length; i++){
+				
+				row = table.insertRow(i+1);
+				cell1 = row.insertCell(0);
+				cell2 = row.insertCell(1);
+				
+			
+				cell1.innerHTML= '<button type ="button" style="border: none; background-color: #FFFFFF;" onclick="showplayer(obj2.playerstat['+i+'].PLAYERNAME)" >'+obj2.playerstat[i].PLAYERNAME+ '</button>';
+				cell2.innerHTML= (obj2.playerstat[i].APG).toFixed(2);
+				
+			}
+				
+	
+		}
+	}
+xmlhttp8.open("GET","http://localhost:8080/project.database/api/DataAccess/topten?season="+season+"&section=AST",true);
+xmlhttp8.send();
+	
+	
+}
+
+function showBPG(){
+	var season;
+	season=document.getElementById("season4").value;
+	document.getElementById("playerPic").style.display='none';
+	var playertable=document.getElementById("myTable");
+	while(playertable.hasChildNodes()){
+		playertable.removeChild(playertable.firstChild);
+		}
+	document.getElementById("playerlist").innerHTML="";
+	var table=document.getElementById("TableBPG");
+	while(table.hasChildNodes()){
+		table.removeChild(table.firstChild);	
+	}
+	var row;
+	var cell1;
+	var cell2;
+	
+	
+	//playername is invalid, then print out nothing
+	/*if(playername==""){
+	
+	printDiv("errorsearch");
+	}
+	*/
+	xmlhttp9.onreadystatechange=function(){
+		
+		if(xmlhttp9.readyState==4 && xmlhttp9.status==200){
+			
+		var outputplayerstat="";
+			var playerstat= '{"playerstat":'+xmlhttp9.responseText+'}';
+			
+			obj2= JSON.parse(playerstat);
+			row = table.insertRow(0);
+			cell1 = row.insertCell(0);
+			cell2 = row.insertCell(1);
+			
+			cell1.innerHTML= "PLAYERNAME";
+			cell2.innerHTML= "BPG";
+		
+			for(i=0; i<obj2.playerstat.length; i++){
+				
+				row = table.insertRow(i+1);
+				cell1 = row.insertCell(0);
+				cell2 = row.insertCell(1);
+				
+			
+				cell1.innerHTML= '<button type ="button" style="border: none; background-color: #FFFFFF;" onclick="showplayer(obj2.playerstat['+i+'].PLAYERNAME)" >'+obj2.playerstat[i].PLAYERNAME+ '</button>';
+				cell2.innerHTML= (obj2.playerstat[i].BPG).toFixed(2);
+				
+			}
+				
+	
+		}
+	}
+xmlhttp9.open("GET","http://localhost:8080/project.database/api/DataAccess/topten?season="+season+"&section=BLK",true);
+xmlhttp9.send();
+	
+	
+}
+
+
+function showSPG(){
+	var season;
+	season=document.getElementById("season5").value;
+	document.getElementById("playerPic").style.display='none';
+	var playertable=document.getElementById("myTable");
+	while(playertable.hasChildNodes()){
+		playertable.removeChild(playertable.firstChild);
+		}
+	document.getElementById("playerlist").innerHTML="";
+	var table=document.getElementById("TableSPG");
+	while(table.hasChildNodes()){
+		table.removeChild(table.firstChild);	
+	}
+	var row;
+	var cell1;
+	var cell2;
+	
+	
+	//playername is invalid, then print out nothing
+	/*if(playername==""){
+	
+	printDiv("errorsearch");
+	}
+	*/
+	xmlhttp10.onreadystatechange=function(){
+		
+		if(xmlhttp10.readyState==4 && xmlhttp10.status==200){
+			
+		var outputplayerstat="";
+			var playerstat= '{"playerstat":'+xmlhttp10.responseText+'}';
+			
+			obj2= JSON.parse(playerstat);
+			row = table.insertRow(0);
+			cell1 = row.insertCell(0);
+			cell2 = row.insertCell(1);
+			
+			cell1.innerHTML= "PLAYERNAME";
+			cell2.innerHTML= "SPG";
+		
+			for(i=0; i<obj2.playerstat.length; i++){
+				
+				row = table.insertRow(i+1);
+				cell1 = row.insertCell(0);
+				cell2 = row.insertCell(1);
+				
+			
+				cell1.innerHTML= '<button type ="button" style="border: none; background-color: #FFFFFF;" onclick="showplayer(obj2.playerstat['+i+'].PLAYERNAME)" >'+obj2.playerstat[i].PLAYERNAME+ '</button>';
+				cell2.innerHTML= (obj2.playerstat[i].SPG).toFixed(2);
+				
+			}
+				
+	
+		}
+	}
+xmlhttp10.open("GET","http://localhost:8080/project.database/api/DataAccess/topten?season="+season+"&section=STL",true);
+xmlhttp10.send();
+	
+	
+}
+
+
+function showplayer(str)
+{
+	document.getElementById("playerPic").style.display='inline';
+	printPic(str);
+	var playername="";
+	playername= str;
+	var table=document.getElementById("myTable");
+	while(table.hasChildNodes()){
+		table.removeChild(table.firstChild);	
+	}
+	var row;
+	var cell1;
+	var cell2;
+	var cell3;
+	var cell4;
+	var cell5;
+	var cell6;
+	var cell7;
+	var cell8;
+	var cell9;
+	
+	xmlhttp2.onreadystatechange=function(){
+		
+		if(xmlhttp2.readyState==4 && xmlhttp2.status==200){
+			var outputplayer="";
+			var playerinfo= '{"theplayer":'+xmlhttp2.responseText+'}';
+			
+			//var outputlist = "";
+			//var text = '{"Players":'+xmlhttp.responseText+'}';
+			obj= JSON.parse(playerinfo);
+			outputplayer='PLAYERNAME: '+obj.theplayer[0].PLAYERNAME+'<br>'+'JERSEYNUMBER: '+obj.theplayer[0].JERSEYNUMBER+'<br>'+'WEIGHT: '+obj.theplayer[0].WEIGHT+'<br>'+'HEIGHT: '+obj.theplayer[0].HEIGHT+'<br>'+'DOB: '+obj.theplayer[0].DOB+'<br>'+'POSITION: '+obj.theplayer[0].POSITION+'<br>';
+			document.getElementById("playerlist").innerHTML= outputplayer;
+			
+			
+			//document.getElementById("selectedplayer").innerHTML= xmlhttp2.responseText;
+			}
+	}
+xmlhttp2.open("GET","http://localhost:8080/project.database/api/DataAccess/playerinformation?player="+playername,true);
+xmlhttp2.send();
+
+xmlhttp3.onreadystatechange=function(){
+		
+		if(xmlhttp3.readyState==4 && xmlhttp3.status==200){
+			var outputplayerstat="";
+			var playerstat= '{"playerstat":'+xmlhttp3.responseText+'}';
+			
+			obj2= JSON.parse(playerstat);
+			row = table.insertRow(0);
+			cell1 = row.insertCell(0);
+			cell2 = row.insertCell(1);
+			cell3 = row.insertCell(2);
+			cell4 = row.insertCell(3);
+			cell5 = row.insertCell(4);
+			cell6 = row.insertCell(5);
+			cell7 = row.insertCell(6);
+			cell8 = row.insertCell(7);
+			cell9 = row.insertCell(8);
+			cell1.innerHTML= "SEASON";
+			cell2.innerHTML= "TEAM";
+			cell3.innerHTML= "GAME PLAYED";
+			cell4.innerHTML= "PTS";
+			cell5.innerHTML= "REB";
+			cell6.innerHTML= "AST";
+			cell7.innerHTML= "STL";
+			cell8.innerHTML= "BLK";
+			cell9.innerHTML= "TOV";
+			for(i=0; i<obj2.playerstat.length; i++){
+				
+				row = table.insertRow(i+1);
+				cell1 = row.insertCell(0);
+				cell2 = row.insertCell(1);
+				cell3 = row.insertCell(2);
+				cell4 = row.insertCell(3);
+				cell5 = row.insertCell(4);
+				cell6 = row.insertCell(5);
+				cell7 = row.insertCell(6);
+				cell8 = row.insertCell(7);
+				cell9 = row.insertCell(8);
+			
+				cell1.innerHTML= obj2.playerstat[i].SEASON;
+				cell2.innerHTML= obj2.playerstat[i].ONTEAM;
+				cell3.innerHTML= obj2.playerstat[i].GP;
+				cell4.innerHTML= (obj2.playerstat[i].PTS/obj2.playerstat[i].GP).toFixed(2);
+				cell5.innerHTML= (obj2.playerstat[i].REB/obj2.playerstat[i].GP).toFixed(2);
+				cell6.innerHTML= (obj2.playerstat[i].AST/obj2.playerstat[i].GP).toFixed(2);
+				cell7.innerHTML= (obj2.playerstat[i].STL/obj2.playerstat[i].GP).toFixed(2);
+				cell8.innerHTML= (obj2.playerstat[i].BLK/obj2.playerstat[i].GP).toFixed(2);
+				cell9.innerHTML= (obj2.playerstat[i].TOV/obj2.playerstat[i].GP).toFixed(2);
+				
+			}
+				
+				
+				
+			
+			
+		}
+	}
+xmlhttp3.open("GET","http://localhost:8080/project.database/api/DataAccess/playerstatistics?player="+playername,true);
+xmlhttp3.send();
+
+}
+
+
+
+
+	
+var xmlhttp = new XMLHttpRequest();
+var xmlhttp2= new XMLHttpRequest();
+var xmlhttp3= new XMLHttpRequest();
+var xmlhttp4= new XMLHttpRequest();
+var xmlhttp5= new XMLHttpRequest();
+var xmlhttp6= new XMLHttpRequest();
+var xmlhttp7= new XMLHttpRequest();
+var xmlhttp8= new XMLHttpRequest();
+var xmlhttp9= new XMLHttpRequest();
+var xmlhttp10= new XMLHttpRequest();
+
+
+
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+		var outputlist = "";
+		var text = '{"Players":'+xmlhttp.responseText+'}';
+		obj= JSON.parse(text);
+		var i;
+    	for(i = 0; i < obj.Players.length; i++) 
+		{
+			//var x = "";
+			//var x = ''+ i+ '';
+			//document.getElementById("selectedplayer").innerHTML=x;
+			outputlist +=  '<button type ="button" style="border: none; background-color: #FFFFFF;" onclick="showplayer(obj.Players['+i+'].PLAYERNAME)" >'
+			 +obj.Players[i].PLAYERNAME+ '</button><br>';
+		}//to list each MountainsNames in a single line with href.
+    	//document.getElementById("callMountainsName").innerHTML=obj.MountainsNames[1].NAME;
+		document.getElementById("playerlist").innerHTML=outputlist;
+	//document.getElementById("callMountainsName").innerHTML = xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","http://localhost:8080/project.database/api/DataAccess/playerinformation",true);
+xmlhttp.send();
+//}
+
+$(function() {
+	$( "#Tabs1" ).tabs(); 
+});
+</script> 
+
+
+</body>
+</html>
